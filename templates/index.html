@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>KCET College Finder</title>
+
+    <style>
+
+        body{
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background:#f5f5f5;
+        }
+
+        h1{
+            text-align:center;
+        }
+
+        .box{
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            margin-bottom:20px;
+        }
+
+        input, select{
+            padding:8px;
+            margin:5px;
+        }
+
+        .scroll-box{
+            height:250px;
+            overflow-y:auto;
+            border:1px solid #ccc;
+            padding:10px;
+            background:white;
+        }
+
+        button{
+            padding:12px 25px;
+            font-size:16px;
+            cursor:pointer;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            background:white;
+        }
+
+        th{
+            background:#222;
+            color:white;
+        }
+
+        th, td{
+            border:1px solid #ccc;
+            padding:8px;
+            text-align:left;
+        }
+
+        tr:nth-child(even){
+            background:#f2f2f2;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<h1>KCET College Finder</h1>
+
+<form method="POST">
+
+    <div class="box">
+
+        <h3>KCET Rank</h3>
+
+        <input
+            type="number"
+            name="rank"
+            placeholder="Enter KCET Rank"
+            required
+        >
+
+        <h3>Category</h3>
+
+        <select name="category" required>
+
+            <option value="">
+                Select Category
+            </option>
+
+            {% for cat in categories %}
+                <option value="{{ cat }}">
+                    {{ cat }}
+                </option>
+            {% endfor %}
+
+        </select>
+
+    </div>
+
+
+    <div class="box">
+
+        <h3>Locations</h3>
+
+        <div class="scroll-box">
+
+            {% for loc in locations %}
+            <label>
+                <input
+                    type="checkbox"
+                    name="location"
+                    value="{{ loc }}"
+                >
+                {{ loc }}
+            </label>
+            <br>
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <div class="box">
+
+        <h3>Branches / Courses</h3>
+
+        <div class="scroll-box">
+
+            {% for course in courses %}
+            <label>
+                <input
+                    type="checkbox"
+                    name="course"
+                    value="{{ course }}"
+                >
+                {{ course }}
+            </label>
+            <br>
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    <button type="submit">
+        Search Colleges
+    </button>
+
+</form>
+
+{% if dream_results or might_results or safe_results %}
+
+<div class="box">
+
+    <h2>Summary</h2>
+
+    <p>🔥 Dream Colleges : {{ dream_results|length }}</p>
+    <p>⚡ Might Get Colleges : {{ might_results|length }}</p>
+    <p>✅ Safe Colleges : {{ safe_results|length }}</p>
+
+</div>
+
+{% endif %}
+
+
+{% if dream_results %}
+
+<h2>🔥 Dream Colleges</h2>
+
+<table>
+<tr>
+    <th>College Code</th>
+    <th>College Name</th>
+    <th>Location</th>
+    <th>Branch</th>
+    <th>Category</th>
+    <th>Rank</th>
+</tr>
+
+{% for row in dream_results %}
+<tr>
+    <td>{{ row.CollegeCode }}</td>
+    <td>{{ row.CollegeName }}</td>
+    <td>{{ row.Location }}</td>
+    <td>{{ row.Branch }}</td>
+    <td>{{ row.Category }}</td>
+    <td>{{ row.Rank|int }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+<br>
+
+{% endif %}
+
+
+{% if might_results %}
+
+<h2>⚡ Might Get Colleges</h2>
+
+<table>
+<tr>
+    <th>College Code</th>
+    <th>College Name</th>
+    <th>Location</th>
+    <th>Branch</th>
+    <th>Category</th>
+    <th>Rank</th>
+</tr>
+
+{% for row in might_results %}
+<tr>
+    <td>{{ row.CollegeCode }}</td>
+    <td>{{ row.CollegeName }}</td>
+    <td>{{ row.Location }}</td>
+    <td>{{ row.Branch }}</td>
+    <td>{{ row.Category }}</td>
+    <td>{{ row.Rank|int }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+<br>
+
+{% endif %}
+
+
+{% if safe_results %}
+
+<h2>✅ Safe Colleges</h2>
+
+<table>
+<tr>
+    <th>College Code</th>
+    <th>College Name</th>
+    <th>Location</th>
+    <th>Branch</th>
+    <th>Category</th>
+    <th>Rank</th>
+</tr>
+
+{% for row in safe_results %}
+<tr>
+    <td>{{ row.CollegeCode }}</td>
+    <td>{{ row.CollegeName }}</td>
+    <td>{{ row.Location }}</td>
+    <td>{{ row.Branch }}</td>
+    <td>{{ row.Category }}</td>
+    <td>{{ row.Rank|int }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endif %}
+
+</body>
+</html>
